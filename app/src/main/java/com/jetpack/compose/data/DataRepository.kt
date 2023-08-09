@@ -1,4 +1,6 @@
-package com.jetpack.compose
+package com.jetpack.compose.data
+
+import com.jetpack.compose.R
 
 /**
  * DataRepository
@@ -8,14 +10,6 @@ package com.jetpack.compose
  */
 object DataRepository {
     fun provideMessageCards() = listOf(
-        Message(
-            "Colleague",
-            "Hey, take a look at Jetpack Compose, it's great! We toggle the expand variable when we click on this Column"
-        ),
-        Message(
-            "Colleague",
-            "Hey, take a look at Jetpack Compose, it's great! We toggle the expand variable when we click on this Column"
-        ),
         Message(
             "Colleague",
             "Hey, take a look at Jetpack Compose, it's great! We toggle the expand variable when we click on this Column"

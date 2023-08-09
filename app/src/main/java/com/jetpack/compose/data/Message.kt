@@ -1,4 +1,4 @@
-package com.jetpack.compose
+package com.jetpack.compose.data
 
 /**
  * Message

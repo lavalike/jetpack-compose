@@ -2,13 +2,17 @@ package com.jetpack.compose
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -23,16 +27,21 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -42,6 +51,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jetpack.compose.data.DataRepository
+import com.jetpack.compose.data.Message
+import com.jetpack.compose.data.TitleData
 import com.jetpack.compose.ui.theme.JetpackcomposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -54,21 +66,114 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LazyColumn {
-                        item { BuildTitle("控件") }
-                        DataRepository.provideMessageCards().forEach { message ->
+                    Box {
+                        val listState = rememberLazyListState()
+                        LazyColumn(state = listState) {
                             item {
-                                BuildMessageCard(message = message)
+                                BuildTitle(
+                                    TitleData(
+                                        title = "控件",
+                                        description = "Jetpack Compose 是用于构建原生 Android 界面的新工具包。它使用更少的代码、强大的工具和直观的 Kotlin API，可以帮助您简化并加快 Android 界面开发。"
+                                    )
+                                )
+                            }
+                            DataRepository.provideMessageCards().forEach { message ->
+                                item {
+                                    BuildMessageCard(message = message)
+                                }
+                            }
+                            item {
+                                BuildTitle(
+                                    TitleData(
+                                        "约束布局",
+                                        "在设计布局时，应考虑不同的屏幕方向和设备类型尺寸。Compose 提供了一些开箱即用的机制，可帮助您根据各种屏幕配置调整可组合项的布局。\n如需了解来自父项的约束条件并相应地设计布局，您可以使用 BoxWithConstraints。您可以在内容 lambda 的作用域内找到测量约束条件。您可以使用这些测量约束条件，为不同的屏幕配置组成不同的布局：",
+                                    )
+                                )
+                            }
+                            item { WithConstraintsComposable() }
+                            item {
+                                BuildTitle(
+                                    TitleData(
+                                        "HorizontalGrid",
+                                        "LazyVerticalGrid 和 LazyHorizontalGrid 可组合项为在网格中显示列表项提供支持。延迟垂直网格会在可垂直滚动容器中跨多个列显示其列表项，而延迟水平网格则会在水平轴上有相同的行为。"
+                                    )
+                                )
+                            }
+                            item { BuildPictureHorizontalGrid() }
+                            item {
+                                BuildTitle(
+                                    TitleData(
+                                        "VerticalGrid",
+                                        "LazyVerticalGrid 和 LazyHorizontalGrid 可组合项为在网格中显示列表项提供支持。延迟垂直网格会在可垂直滚动容器中跨多个列显示其列表项，而延迟水平网格则会在水平轴上有相同的行为。"
+                                    )
+                                )
+                            }
+                            item { BuildPictureVerticalGrid() }
+                        }
+                        val showButton by remember {
+                            derivedStateOf {
+                                listState.firstVisibleItemIndex > 0
                             }
                         }
-                        item { BuildTitle("HorizontalGrid") }
-                        item { BuildPictureHorizontalGrid() }
-                        item { BuildTitle("VerticalGrid") }
-                        item { BuildPictureVerticalGrid() }
+                        AnimatedVisibility(
+                            visible = showButton,
+                            modifier = Modifier.align(Alignment.BottomEnd),
+                        ) {
+                            Button(
+                                onClick = {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "you clicked floating button",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }, modifier = Modifier
+                                    .padding(10.dp)
+                                    .size(60.dp)
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.mipmap.ic_done),
+                                    contentDescription = null,
+                                )
+                            }
+                        }
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun WithConstraintsComposable() {
+    BoxWithConstraints {
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            color = MaterialTheme.colorScheme.surface,
+            shadowElevation = 1.dp,
+            tonalElevation = 1.dp,
+            modifier = Modifier
+                .animateContentSize()
+                .padding(10.dp),
+        ) {
+            Text(
+                "My minHeight is $minHeight while my maxWidth is $maxWidth",
+                modifier = Modifier.padding(10.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WithConstraintsComposablePreview() {
+    Column {
+        BuildTitle(
+            data = TitleData(
+                "约束布局",
+                "在设计布局时，应考虑不同的屏幕方向和设备类型尺寸。Compose 提供了一些开箱即用的机制，可帮助您根据各种屏幕配置调整可组合项的布局。",
+            )
+        )
+        WithConstraintsComposable()
     }
 }
 
@@ -118,13 +223,19 @@ private fun BuildMessageCard(message: Message) {
 }
 
 @Composable
-fun BuildTitle(title: String) {
-    Text(
-        title,
-        modifier = Modifier.padding(10.dp),
-        color = Color.Black,
-        style = MaterialTheme.typography.titleLarge
-    )
+fun BuildTitle(data: TitleData) {
+    Column(modifier = Modifier.padding(top = 10.dp, start = 10.dp, end = 10.dp, bottom = 5.dp)) {
+        Text(
+            data.title,
+            color = Color.Black,
+            style = MaterialTheme.typography.titleLarge
+        )
+        Text(
+            data.description,
+            color = Color.Black,
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
 }
 
 @Composable
