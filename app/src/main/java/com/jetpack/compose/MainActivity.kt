@@ -14,13 +14,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
@@ -34,6 +38,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -88,6 +93,17 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item {
+                                BuildTitle(
+                                    TitleData(
+                                        title = "固有特性的实际运用",
+                                        description = "Compose 有一项规则，即，子项只能测量一次，测量两次就会引发运行时异常。但是，有时需要先收集一些关于子项的信息，然后再测量子项。\n借助固有特性，您可以先查询子项，然后再进行实际测量。\n假设我们需要创建一个可组合项，该可组合项在屏幕上显示两个用分隔线隔开的文本。我们该怎么做？我们可以将两个 Text 放在同一 Row，并在其中最大程度地扩展，另外在中间放置一个 Divider。我们需要将分隔线的高度设置为与最高的 Text 相同，粗细设置为 width = 1.dp。预览时，我们发现分隔线扩展到整个屏幕，这并不是我们想要的效果。之所以出现这种情况，是因为 Row 会逐个测量每个子项，并且 Text 的高度不能用于限制 Divider。我们希望 Divider 以一个给定的高度来填充可用空间。为此，我们可以使用 height(IntrinsicSize.Min) 修饰符。\nheight(IntrinsicSize.Min) 可将其子项的高度强行调整为最小固有高度。由于该修饰符具有递归性，因此它将查询 Row 及其子项 minIntrinsicHeight。"
+                                    )
+                                )
+                            }
+                            item {
+                                IntrinsicHeightComposable()
+                            }
                             item {
                                 BuildTitle(
                                     TitleData(
@@ -171,6 +187,48 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun IntrinsicHeightComposable() {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surface,
+        modifier = Modifier
+            .clip(RoundedCornerShape(5.dp))
+            .padding(10.dp),
+        shadowElevation = 1.dp,
+        tonalElevation = 1.dp,
+    ) {
+        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+            Text(
+                text = "Hi",
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(10.dp)
+                    .wrapContentWidth(Alignment.Start)
+            )
+            Divider(
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(1.dp)
+            )
+            Text(
+                text = "There",
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(10.dp)
+                    .wrapContentWidth(Alignment.End)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun IntrinsicHeightComposablePreview() {
+    IntrinsicHeightComposable()
+}
+
+@Composable
 fun ButtonComposable() {
     Button(
         onClick = { /* ... */ },
@@ -192,12 +250,6 @@ fun ButtonComposable() {
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         Text("Like")
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ButtonComposablePreview() {
-    ButtonComposable()
 }
 
 @Composable
@@ -255,7 +307,7 @@ private fun BuildPictureHorizontalGrid() {
 private fun BuildPictureVerticalGrid() {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
-        modifier = Modifier.height(245.dp),
+        modifier = Modifier.height(300.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         contentPadding = PaddingValues(10.dp),
@@ -263,10 +315,19 @@ private fun BuildPictureVerticalGrid() {
         items(DataRepository.providePictures()) { item ->
             Image(
                 painter = painterResource(id = item), contentDescription = null,
-                modifier = Modifier.clip(RoundedCornerShape(5.dp))
+                modifier = Modifier
+                    .clip(RoundedCornerShape(5.dp))
+                    .aspectRatio(1.5f),
+                contentScale = ContentScale.Crop,
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BuildPictureVerticalGridPreview() {
+    BuildPictureVerticalGrid()
 }
 
 @Composable
