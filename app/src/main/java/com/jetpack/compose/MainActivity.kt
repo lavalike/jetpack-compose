@@ -8,7 +8,9 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +18,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -46,24 +54,77 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Column {
-                        Text(
-                            "基础布局、排版",
-                            modifier = Modifier.padding(10.dp),
-                            color = Color.Black,
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                        MessageCard(
-                            Message(
-                                "Colleague",
-                                "Hey, take a look at Jetpack Compose, it's great! We toggle the expand variable when we click on this Column"
-                            )
-                        )
+                    LazyColumn {
+                        item { BuildTitle("控件") }
+                        DataRepository.provideMessageCards().forEach { message ->
+                            item {
+                                BuildMessageCard(message = message)
+                            }
+                        }
+                        item { BuildTitle("HorizontalGrid") }
+                        item { BuildPictureHorizontalGrid() }
+                        item { BuildTitle("VerticalGrid") }
+                        item { BuildPictureVerticalGrid() }
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun BuildPictureHorizontalGrid() {
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(1),
+        modifier = Modifier.height(100.dp),
+        contentPadding = PaddingValues(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        items(DataRepository.providePictures()) { item ->
+            Image(
+                painter = painterResource(id = item), contentDescription = null,
+                modifier = Modifier.clip(RoundedCornerShape(5.dp))
+            )
+        }
+    }
+}
+
+@Composable
+private fun BuildPictureVerticalGrid() {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        modifier = Modifier.height(245.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        contentPadding = PaddingValues(10.dp),
+    ) {
+        items(DataRepository.providePictures()) { item ->
+            Image(
+                painter = painterResource(id = item), contentDescription = null,
+                modifier = Modifier.clip(RoundedCornerShape(5.dp))
+            )
+        }
+    }
+}
+
+@Composable
+private fun BuildMessageCard(message: Message) {
+    MessageCard(
+        Message(
+            message.author,
+            message.body,
+        )
+    )
+}
+
+@Composable
+fun BuildTitle(title: String) {
+    Text(
+        title,
+        modifier = Modifier.padding(10.dp),
+        color = Color.Black,
+        style = MaterialTheme.typography.titleLarge
+    )
 }
 
 @Composable
@@ -117,10 +178,6 @@ fun MessageCard(data: Message) {
     }
 }
 
-data class Message(
-    val author: String,
-    val body: String,
-)
 
 @Preview(
     name = "Light Mode",
