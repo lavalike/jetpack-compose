@@ -4,8 +4,10 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +21,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -50,7 +56,7 @@ class MainActivity : ComponentActivity() {
                         MessageCard(
                             Message(
                                 "Colleague",
-                                "Hey, take a look at Jetpack Compose, it's great!"
+                                "Hey, take a look at Jetpack Compose, it's great! We toggle the expand variable when we click on this Column"
                             )
                         )
                     }
@@ -84,17 +90,26 @@ fun MessageCard(data: Message) {
                 style = MaterialTheme.typography.titleLarge,
             )
             Spacer(modifier = Modifier.height(4.dp))
+
+            var expand by remember { mutableStateOf(false) }
+
             Surface(
                 shape = MaterialTheme.shapes.medium,
+                color = if (expand) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
                 shadowElevation = 1.dp,
-                tonalElevation = 1.dp
+                tonalElevation = 1.dp,
+                modifier = Modifier.animateContentSize(),
             ) {
                 Text(
                     text = data.body,
-                    modifier = Modifier.padding(10.dp),
-                    maxLines = 3,
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .clickable {
+                            expand = !expand
+                        },
+                    maxLines = if (expand) Int.MAX_VALUE else 2,
                     overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = if (expand) Color.White else MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
@@ -121,7 +136,12 @@ data class Message(
 fun MessageCardPreview() {
     JetpackcomposeTheme {
         Surface {
-            MessageCard(Message("Colleague", "Hey, take a look at Jetpack Compose, it's great!"))
+            MessageCard(
+                Message(
+                    "Colleague",
+                    "Hey, take a look at Jetpack Compose, it's great! We toggle the expand variable when we click on this Column"
+                )
+            )
         }
     }
 }
