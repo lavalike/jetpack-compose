@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,12 +31,19 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -64,12 +70,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackcomposeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Box {
+                @OptIn(ExperimentalMaterial3Api::class)
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = { Text(text = "Jetpack Compose", color = Color.White) },
+                            colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
+                        )
+                    },
+                    floatingActionButton = {
+                        FloatingActionButton(onClick = { /*TODO*/ }) {
+                            Icon(Icons.Default.Send, contentDescription = "Send")
+                        }
+                    },
+                    floatingActionButtonPosition = FabPosition.End,
+                ) { contentPadding ->
+                    Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
                             item {
@@ -124,6 +140,7 @@ class MainActivity : ComponentActivity() {
                             }
                             item { BuildPictureVerticalGrid() }
                         }
+
                         val showButton by remember {
                             derivedStateOf {
                                 listState.firstVisibleItemIndex > 0
@@ -131,23 +148,19 @@ class MainActivity : ComponentActivity() {
                         }
                         AnimatedVisibility(
                             visible = showButton,
-                            modifier = Modifier.align(Alignment.BottomEnd),
+                            modifier = Modifier.align(Alignment.BottomStart),
                         ) {
                             Button(
                                 onClick = {
                                     Toast.makeText(
                                         applicationContext,
-                                        "you clicked floating button",
+                                        "you clicked animated button",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }, modifier = Modifier
                                     .padding(10.dp)
-                                    .size(60.dp)
                             ) {
-                                Icon(
-                                    painter = painterResource(id = R.mipmap.ic_done),
-                                    contentDescription = null,
-                                )
+                                Text(text = "Animated Button")
                             }
                         }
                     }
