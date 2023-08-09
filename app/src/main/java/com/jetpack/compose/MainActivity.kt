@@ -30,7 +30,10 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -69,6 +72,17 @@ class MainActivity : ComponentActivity() {
                     Box {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item {
+                                BuildTitle(
+                                    TitleData(
+                                        title = "内容槽",
+                                        description = "支持内部内容（文本标签、图标等）的 Material 组件往往会提供“槽”（即接受可组合内容的通用 lambda），而且还会提供尺寸和内边距等公共常量，从而支持设置内部内容的布局，使之符合 Material 规范。例如：Button"
+                                    )
+                                )
+                            }
+                            item {
+                                ButtonComposable()
+                            }
                             item {
                                 BuildTitle(
                                     TitleData(
@@ -141,6 +155,36 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+@Composable
+fun ButtonComposable() {
+    Button(
+        onClick = { /* ... */ },
+        // Uses ButtonDefaults.ContentPadding by default
+        contentPadding = PaddingValues(
+            start = 20.dp,
+            top = 12.dp,
+            end = 20.dp,
+            bottom = 12.dp
+        ),
+        modifier = Modifier.padding(10.dp)
+    ) {
+        // Inner content including an icon and a text label
+        Icon(
+            Icons.Filled.Favorite,
+            contentDescription = "Favorite",
+            modifier = Modifier.size(ButtonDefaults.IconSize)
+        )
+        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+        Text("Like")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ButtonComposablePreview() {
+    ButtonComposable()
 }
 
 @Composable
