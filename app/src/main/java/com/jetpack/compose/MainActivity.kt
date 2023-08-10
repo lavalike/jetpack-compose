@@ -1,5 +1,6 @@
 package com.jetpack.compose
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
@@ -61,6 +62,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -95,6 +97,17 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item {
+                                BuildTitle(
+                                    TitleData(
+                                        title = "将 Jetpack Compose 添加到应用中",
+                                        description = "Jetpack Compose 旨在配合既有的基于视图的界面构造方式一起使用。如果您要构建新应用，最好的选择可能是使用 Compose 实现整个界面。但是，如果您要修改现有应用，那么请不要一次性迁移整个应用，而是可以将 Compose 与现有的界面设计实现相结合。"
+                                    )
+                                )
+                            }
+                            item {
+                                NativeEmbedComposable()
+                            }
                             item {
                                 BuildTitle(
                                     TitleData(
@@ -199,6 +212,20 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun NativeEmbedComposable() {
+    val context = LocalContext.current
+    Button(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp), onClick = {
+            context.startActivity(Intent(context, SecondActivity::class.java))
+        }) {
+        Text("跳转原生")
+    }
+}
+
 @Composable
 fun ConstraintLayoutComposable() {
     Surface(
@@ -258,12 +285,6 @@ fun ConstraintLayoutComposable() {
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ConstraintLayoutComposablePreview() {
-    ConstraintLayoutComposable()
 }
 
 @Composable
