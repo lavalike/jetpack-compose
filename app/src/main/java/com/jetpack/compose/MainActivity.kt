@@ -98,10 +98,10 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item { NativeEmbedComposable() }
                             item { ConstraintChainStyleComposable() }
                             item { ConstraintBarrierComposable() }
                             item { ConstraintLayoutComposable() }
-                            item { NativeEmbedComposable() }
                             item { IntrinsicHeightComposable() }
                             item { ButtonComposable() }
                             item {
