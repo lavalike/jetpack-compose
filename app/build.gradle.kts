@@ -20,13 +20,32 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = "compose"
+            keyPassword = "123456"
+            storeFile = file("compose.jks")
+            storePassword = "123456"
+        }
+    }
+
     buildTypes {
+        val configs = signingConfigs.getByName("release")
+        debug {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = configs
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = configs
         }
     }
     compileOptions {
