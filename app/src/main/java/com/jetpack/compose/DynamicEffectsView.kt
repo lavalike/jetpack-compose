@@ -26,7 +26,7 @@ class DynamicEffectsView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     companion object {
-        const val DURATION = 1500L
+        const val CIRCLE_DURATION = 1500L
     }
 
     private val defaultSize = dip2px(150f)
@@ -59,7 +59,6 @@ class DynamicEffectsView @JvmOverloads constructor(
         isAntiAlias = true
         style = Paint.Style.FILL
         alpha = (255 * 0.5).toInt()
-        isFilterBitmap = true
     }
 
     private var leftAnimatorSet = AnimatorSet().apply {
@@ -71,7 +70,7 @@ class DynamicEffectsView @JvmOverloads constructor(
                             transformColor(it.animatedFraction, entry.key, entry.value)
                         invalidate()
                     }
-                    duration = DURATION
+                    duration = CIRCLE_DURATION
                 })
             }
         })
@@ -92,7 +91,7 @@ class DynamicEffectsView @JvmOverloads constructor(
                                 transformColor(it.animatedFraction, entry.key, entry.value)
                             invalidate()
                         }
-                        duration = DURATION
+                        duration = CIRCLE_DURATION
                     })
                 }
             })
@@ -124,9 +123,9 @@ class DynamicEffectsView @JvmOverloads constructor(
 
     private fun drawCircles(canvas: Canvas) {
         leftCirclePaint.color = leftCircleColor
-        canvas.drawCircle(width * 2f / 5, height * 2f / 3, dip2px(160f).toFloat(), leftCirclePaint)
+        canvas.drawCircle(width * 2f / 5, height * 2f / 3, height * 1f / 2, leftCirclePaint)
         rightCirclePaint.color = rightCircleColor
-        canvas.drawCircle(width * 2f / 3, height * 2f / 5, dip2px(150f).toFloat(), rightCirclePaint)
+        canvas.drawCircle(width * 2f / 3, height * 2f / 5, height * 1f / 2, rightCirclePaint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
