@@ -35,7 +35,7 @@ class DynamicEffectsView @JvmOverloads constructor(
     private var width = 0
     private var height = 0
     private var degrees = 0f
-    private val srcRectF = RectF()
+    private val screenRectF = RectF()
 
     private var leftCircleColor = Color.TRANSPARENT
     private val leftCircleColors = mapOf(
@@ -60,6 +60,12 @@ class DynamicEffectsView @JvmOverloads constructor(
     }
     private val bitmapPaint = Paint().apply {
         isAntiAlias = true
+        style = Paint.Style.FILL
+        alpha = (255 * 0.5).toInt()
+    }
+    private val coverPaint = Paint().apply {
+        isAntiAlias = true
+        color = Color.BLACK
         style = Paint.Style.FILL
         alpha = (255 * 0.5).toInt()
     }
@@ -125,13 +131,18 @@ class DynamicEffectsView @JvmOverloads constructor(
         super.onSizeChanged(w, h, oldw, oldh)
         width = w
         height = h
-        srcRectF.set(0f, 0f, w * 1f, h * 1f)
+        screenRectF.set(0f, 0f, w * 1f, h * 1f)
     }
 
     override fun onDraw(canvas: Canvas) {
         drawBackground(canvas)
         drawCircles(canvas)
         drawMiddleLayer(canvas)
+        drawCover(canvas)
+    }
+
+    private fun drawCover(canvas: Canvas) {
+        canvas.drawRect(screenRectF, coverPaint)
     }
 
     private fun drawBackground(canvas: Canvas) {
@@ -141,7 +152,7 @@ class DynamicEffectsView @JvmOverloads constructor(
     private fun drawMiddleLayer(canvas: Canvas) {
         canvas.save()
         canvas.rotate(degrees, width / 2f, height / 2f)
-        canvas.drawBitmap(layerBitmap, null, srcRectF, bitmapPaint)
+        canvas.drawBitmap(layerBitmap, null, screenRectF, bitmapPaint)
         canvas.restore()
     }
 
