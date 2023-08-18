@@ -1,8 +1,8 @@
 package com.jetpack.compose
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,6 +35,9 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.selection.DisableSelection
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Send
@@ -60,14 +63,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.jetpack.compose.data.DataRepository
@@ -98,6 +111,9 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item { BasicTextComposable() }
+                            item { ClickableComposable() }
+                            item { SelectionTextComposable() }
                             item { NativeEmbedComposable() }
                             item { ConstraintChainStyleComposable() }
                             item { ConstraintBarrierComposable() }
@@ -150,7 +166,111 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Preview(showBackground = true)
+@Composable
+fun ClickableComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "获取点击文字的位置",
+                description = "如需监听 Text 的点击次数，您可以添加 clickable 修饰符。不过，如果您想在 Text 可组合项内获取点击位置，在对文字的不同部分执行不同操作的情况下，您需要改用 ClickableText。\n当用户点击 Text 可组合项时，您可能想向 Text 值的某一部分附加额外信息，例如向特定字词附加可在浏览器中打开的网址。如果要执行此操作，您需要附加一个注解，用于获取一个标记 (String)、一个项 (String) 和一个文字范围作为参数。在 AnnotatedString 中，这些注解可以按照其标记或文字范围进行过滤。"
+            )
+        )
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            color = MaterialTheme.colorScheme.surface,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+                .clip(RoundedCornerShape(5.dp)),
+            shadowElevation = 1.dp,
+            tonalElevation = 1.dp,
+        ) {
+            val context = LocalContext.current
+            Column(modifier = Modifier.padding(10.dp)) {
+                ClickableText(
+                    text = AnnotatedString("Click Me"),
+                    onClick = { offset ->
+                        Toast.makeText(
+                            context,
+                            "$offset -th character is clicked.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
+
+                val annotatedString = buildAnnotatedString {
+                    append("Click ")
+
+                    pushStringAnnotation(
+                        "URL",
+                        "https://developer.android.google.cn/jetpack/compose/text?hl=zh-cn"
+                    )
+
+                    withStyle(
+                        style = SpanStyle(
+                            color = Color.Blue,
+                            fontWeight = FontWeight.Bold
+                        )
+                    ) {
+                        append("developer.android.google.cn/jetpack/compose")
+                    }
+
+                    pop()
+                }
+
+                ClickableText(text = annotatedString, onClick = { offset ->
+                    annotatedString.getStringAnnotations(tag = "URL", start = offset, end = offset)
+                        .firstOrNull()?.let { annotation ->
+                            Toast.makeText(
+                                context,
+                                annotation.item,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                })
+            }
+        }
+    }
+}
+
+@Composable
+fun SelectionTextComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "选择文字",
+                description = "默认情况下，可组合项不可选择，这意味着在默认情况下用户无法从您的应用中选择和复制文字。要启用文字选择，需要使用 SelectionContainer 可组合项封装文字元素。\n您可能想为可选择区域的特定部分停用选择功能。如果要执行此操作，您需要使用 DisableSelection 可组合项来封装不可选择的部分。"
+            )
+        )
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            color = MaterialTheme.colorScheme.surface,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+                .clip(RoundedCornerShape(5.dp)),
+            shadowElevation = 1.dp,
+            tonalElevation = 1.dp,
+        ) {
+            SelectionContainer {
+                Column(modifier = Modifier.padding(10.dp)) {
+                    Text("This text is selectable")
+                    Text("This one too")
+                    Text("This one as well")
+                    DisableSelection {
+                        Text("But not this one")
+                        Text("Neither this one")
+                    }
+                    Text("But again, you can select this one")
+                    Text("And this one too")
+                }
+            }
+        }
+    }
+}
+
 @Composable
 fun ConstraintChainStyleComposable() {
     Column {
@@ -313,6 +433,61 @@ fun ConstraintBarrierComposable() {
                             start.linkTo(item1.start)
                             top.linkTo(item1.bottom)
                         }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun BasicTextComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "Compose 中的文字",
+                description = "文字对任何界面都属于核心内容，而利用 Jetpack Compose 可以更轻松地显示或写入文字。Compose 可以充分利用其构建块的组合，这意味着您无需覆盖各种属性和方法，也无需扩展大型类，即可拥有特定的可组合项设计以及按您期望的方式运行的逻辑。"
+            )
+        )
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            color = MaterialTheme.colorScheme.surface,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+                .clip(RoundedCornerShape(5.dp)),
+            shadowElevation = 1.dp,
+            tonalElevation = 1.dp,
+        ) {
+            Column(modifier = Modifier.padding(10.dp)) {
+                Text("Hello World", fontFamily = FontFamily.Serif)
+                Text("Hello World", fontFamily = FontFamily.SansSerif)
+                Text(
+                    buildAnnotatedString {
+                        withStyle(style = SpanStyle(color = Color.Blue)) {
+                            append("H")
+                        }
+                        append("ello ")
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Red
+                            )
+                        ) {
+                            append("W")
+                        }
+                        append("orld")
+                    }
+                )
+                Text(
+                    text = "Hello World!",
+                    style = TextStyle(
+                        fontSize = 24.sp,
+                        shadow = Shadow(
+                            color = Color.Blue,
+                            offset = Offset(5f, 10f),
+                            blurRadius = 3f,
+                        )
+                    )
                 )
             }
         }
@@ -645,16 +820,16 @@ fun MessageCard(data: Message) {
 }
 
 
-@Preview(
-    name = "Light Mode",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
-)
-@Preview(
-    name = "Night Mode",
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
-)
+//@Preview(
+//    name = "Light Mode",
+//    showBackground = true,
+//    uiMode = Configuration.UI_MODE_NIGHT_NO
+//)
+//@Preview(
+//    name = "Night Mode",
+//    showBackground = true,
+//    uiMode = Configuration.UI_MODE_NIGHT_YES
+//)
 @Composable
 fun MessageCardPreview() {
     JetpackComposeTheme {
