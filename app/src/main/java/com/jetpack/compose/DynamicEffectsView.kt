@@ -12,6 +12,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.LinearInterpolator
 
 /**
  * DynamicEffectsView
@@ -27,11 +28,13 @@ class DynamicEffectsView @JvmOverloads constructor(
 
     companion object {
         const val CIRCLE_DURATION = 1500L
+        const val LAYER_DURATION = 1000L * 40
     }
 
     private val defaultSize = dip2px(150f)
     private var width = 0
     private var height = 0
+    private var degrees = 0f
     private val srcRectF = RectF()
 
     private var leftCircleColor = Color.TRANSPARENT
@@ -61,7 +64,7 @@ class DynamicEffectsView @JvmOverloads constructor(
         alpha = (255 * 0.5).toInt()
     }
 
-    private var leftAnimatorSet = AnimatorSet().apply {
+    private val leftAnimatorSet = AnimatorSet().apply {
         playSequentially(mutableListOf<Animator>().apply {
             for (entry in leftCircleColors.entries) {
                 add(ValueAnimator.ofFloat(0f, 1f).apply {
@@ -71,6 +74,7 @@ class DynamicEffectsView @JvmOverloads constructor(
                         invalidate()
                     }
                     duration = CIRCLE_DURATION
+                    interpolator = LinearInterpolator()
                 })
             }
         })
@@ -92,6 +96,7 @@ class DynamicEffectsView @JvmOverloads constructor(
                             invalidate()
                         }
                         duration = CIRCLE_DURATION
+                        interpolator = LinearInterpolator()
                     })
                 }
             })
@@ -100,6 +105,17 @@ class DynamicEffectsView @JvmOverloads constructor(
                 animation.start()
             }
         })
+        start()
+    }
+    private val rotateAnimator = ValueAnimator.ofFloat(0f, 360f).apply {
+        addUpdateListener {
+            degrees = (it.animatedValue as Float) * -1f
+            invalidate()
+        }
+        repeatCount = ValueAnimator.INFINITE
+        repeatMode = ValueAnimator.REVERSE
+        interpolator = LinearInterpolator()
+        duration = LAYER_DURATION
         start()
     }
 
@@ -118,7 +134,13 @@ class DynamicEffectsView @JvmOverloads constructor(
     }
 
     private fun drawMiddleLayer(canvas: Canvas) {
+        canvas.save()
+        canvas.rotate(degrees, width / 2f, height / 2f)
         canvas.drawBitmap(layerBitmap, null, srcRectF, bitmapPaint)
+//        canvas.drawBitmap(layerBitmap, Matrix().apply {
+//            setScale(2f, 2f)
+//        }, bitmapPaint)
+        canvas.restore()
     }
 
     private fun drawCircles(canvas: Canvas) {
@@ -147,6 +169,7 @@ class DynamicEffectsView @JvmOverloads constructor(
         super.onDetachedFromWindow()
         leftAnimatorSet.cancel()
         rightAnimatorSet.cancel()
+        rotateAnimator.cancel()
     }
 
     /**
