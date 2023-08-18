@@ -5,9 +5,11 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 
@@ -30,6 +32,7 @@ class DynamicEffectsView @JvmOverloads constructor(
     private val defaultSize = dip2px(150f)
     private var width = 0
     private var height = 0
+    private val srcRectF = RectF()
 
     private var leftCircleColor = Color.TRANSPARENT
     private val leftCircleColors = mapOf(
@@ -51,6 +54,12 @@ class DynamicEffectsView @JvmOverloads constructor(
     private val rightCirclePaint: Paint = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.FILL
+    }
+    private val bitmapPaint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.FILL
+        alpha = (255 * 0.5).toInt()
+        isFilterBitmap = true
     }
 
     private var leftAnimatorSet = AnimatorSet().apply {
@@ -95,14 +104,22 @@ class DynamicEffectsView @JvmOverloads constructor(
         start()
     }
 
+    private val layerBitmap = BitmapFactory.decodeResource(resources, R.mipmap.middle_layer)
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         width = w
         height = h
+        srcRectF.set(0f, 0f, w * 1f, h * 1f)
     }
 
     override fun onDraw(canvas: Canvas) {
         drawCircles(canvas)
+        drawMiddleLayer(canvas)
+    }
+
+    private fun drawMiddleLayer(canvas: Canvas) {
+        canvas.drawBitmap(layerBitmap, null, srcRectF, bitmapPaint)
     }
 
     private fun drawCircles(canvas: Canvas) {
