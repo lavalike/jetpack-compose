@@ -129,17 +129,19 @@ class DynamicEffectsView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+        drawBackground(canvas)
         drawCircles(canvas)
         drawMiddleLayer(canvas)
+    }
+
+    private fun drawBackground(canvas: Canvas) {
+        canvas.drawColor(Color.BLACK)
     }
 
     private fun drawMiddleLayer(canvas: Canvas) {
         canvas.save()
         canvas.rotate(degrees, width / 2f, height / 2f)
         canvas.drawBitmap(layerBitmap, null, srcRectF, bitmapPaint)
-//        canvas.drawBitmap(layerBitmap, Matrix().apply {
-//            setScale(2f, 2f)
-//        }, bitmapPaint)
         canvas.restore()
     }
 
