@@ -50,24 +50,32 @@ class DynamicEffectsView @JvmOverloads constructor(
         Color.parseColor("#F5D976") to Color.parseColor("#AC85FF"),
     )
 
-    private val leftCirclePaint: Paint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.FILL
+    private val leftCirclePaint by lazy {
+        Paint().apply {
+            isAntiAlias = true
+            style = Paint.Style.FILL
+        }
     }
-    private val rightCirclePaint: Paint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.FILL
+    private val rightCirclePaint by lazy {
+        Paint().apply {
+            isAntiAlias = true
+            style = Paint.Style.FILL
+        }
     }
-    private val bitmapPaint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.FILL
-        alpha = (255 * 0.5).toInt()
+    private val bitmapPaint by lazy {
+        Paint().apply {
+            isAntiAlias = true
+            style = Paint.Style.FILL
+            alpha = (255 * 0.5).toInt()
+        }
     }
-    private val coverPaint = Paint().apply {
-        isAntiAlias = true
-        color = Color.BLACK
-        style = Paint.Style.FILL
-        alpha = (255 * 0.5).toInt()
+    private val coverPaint by lazy {
+        Paint().apply {
+            isAntiAlias = true
+            color = Color.BLACK
+            style = Paint.Style.FILL
+            alpha = (255 * 0.5).toInt()
+        }
     }
 
     private val leftAnimatorSet = AnimatorSet().apply {
@@ -125,7 +133,9 @@ class DynamicEffectsView @JvmOverloads constructor(
         start()
     }
 
-    private val layerBitmap = BitmapFactory.decodeResource(resources, R.mipmap.middle_layer)
+    private val layerBitmap by lazy {
+        BitmapFactory.decodeResource(resources, R.mipmap.middle_layer)
+    }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -151,6 +161,7 @@ class DynamicEffectsView @JvmOverloads constructor(
 
     private fun drawMiddleLayer(canvas: Canvas) {
         canvas.save()
+        canvas.scale(2.5f, 2.5f, width / 2f, height / 2f)
         canvas.rotate(degrees, width / 2f, height / 2f)
         canvas.drawBitmap(layerBitmap, null, screenRectF, bitmapPaint)
         canvas.restore()

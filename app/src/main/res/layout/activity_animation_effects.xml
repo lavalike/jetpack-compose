@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.jetpack.blur.RealtimeBlurView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:blurRadius="20dp"
-        app:overlayColor="#80000000" />
+<!--    <com.jetpack.blur.RealtimeBlurView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:blurRadius="20dp"-->
+<!--        app:overlayColor="#80000000" />-->
 </FrameLayout>
