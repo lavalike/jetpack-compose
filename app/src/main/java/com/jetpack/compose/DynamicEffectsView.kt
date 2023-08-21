@@ -9,7 +9,9 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.RadialGradient
 import android.graphics.RectF
+import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
@@ -28,12 +30,18 @@ class DynamicEffectsView @JvmOverloads constructor(
 
     companion object {
         const val CIRCLE_DURATION = 1500L
-        const val LAYER_DURATION = 1000L * 100
+        const val LAYER_DURATION = 1000L * 50
     }
 
     private val defaultSize = dip2px(150f)
     private var width = 0
     private var height = 0
+    private val leftCenterX by lazy { width * 1f / 2 }
+    private val leftCenterY by lazy { height * 2f / 3 }
+    private val rightCenterX by lazy { width * 3f / 4 }
+    private val rightCenterY by lazy { height * 1f / 3 }
+    private val circleRadius by lazy { height * 1f }
+
     private var degrees = 0f
     private val screenRectF = RectF()
 
@@ -52,13 +60,11 @@ class DynamicEffectsView @JvmOverloads constructor(
 
     private val leftCirclePaint by lazy {
         Paint().apply {
-            isAntiAlias = true
             style = Paint.Style.FILL
         }
     }
     private val rightCirclePaint by lazy {
         Paint().apply {
-            isAntiAlias = true
             style = Paint.Style.FILL
         }
     }
@@ -66,15 +72,7 @@ class DynamicEffectsView @JvmOverloads constructor(
         Paint().apply {
             isAntiAlias = true
             style = Paint.Style.FILL
-            alpha = (255 * 0.5).toInt()
-        }
-    }
-    private val coverPaint by lazy {
-        Paint().apply {
-            isAntiAlias = true
-            color = Color.BLACK
-            style = Paint.Style.FILL
-            alpha = (255 * 0.5).toInt()
+            alpha = (255 * 0.2).toInt()
         }
     }
 
@@ -148,11 +146,6 @@ class DynamicEffectsView @JvmOverloads constructor(
         drawBackground(canvas)
         drawCircles(canvas)
         drawMiddleLayer(canvas)
-        drawCover(canvas)
-    }
-
-    private fun drawCover(canvas: Canvas) {
-        canvas.drawRect(screenRectF, coverPaint)
     }
 
     private fun drawBackground(canvas: Canvas) {
@@ -168,10 +161,25 @@ class DynamicEffectsView @JvmOverloads constructor(
     }
 
     private fun drawCircles(canvas: Canvas) {
-        leftCirclePaint.color = leftCircleColor
-        canvas.drawCircle(width * 2f / 5, height * 2f / 3, height * 1f / 2, leftCirclePaint)
-        rightCirclePaint.color = rightCircleColor
-        canvas.drawCircle(width * 2f / 3, height * 2f / 5, height * 1f / 2, rightCirclePaint)
+        leftCirclePaint.shader = RadialGradient(
+            leftCenterX,
+            leftCenterY,
+            circleRadius,
+            leftCircleColor,
+            Color.TRANSPARENT,
+            Shader.TileMode.REPEAT
+        )
+        canvas.drawCircle(leftCenterX, leftCenterY, circleRadius, leftCirclePaint)
+
+        rightCirclePaint.shader = RadialGradient(
+            rightCenterX,
+            rightCenterY,
+            circleRadius,
+            rightCircleColor,
+            Color.TRANSPARENT,
+            Shader.TileMode.REPEAT
+        )
+        canvas.drawCircle(rightCenterX, rightCenterY, circleRadius, rightCirclePaint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
