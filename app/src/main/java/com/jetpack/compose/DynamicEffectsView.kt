@@ -28,7 +28,7 @@ class DynamicEffectsView @JvmOverloads constructor(
 
     companion object {
         const val CIRCLE_DURATION = 1500L
-        const val LAYER_DURATION = 1000L * 40
+        const val LAYER_DURATION = 1000L * 100
     }
 
     private val defaultSize = dip2px(150f)
