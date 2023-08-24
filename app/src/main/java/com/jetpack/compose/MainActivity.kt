@@ -114,6 +114,7 @@ class MainActivity : ComponentActivity() {
                             item { ClickableComposable() }
                             item { SelectionTextComposable() }
                             item { NativeEmbedComposable() }
+                            item { DynamicBlurComposable() }
                             item { ConstraintChainStyleComposable() }
                             item { ConstraintBarrierComposable() }
                             item { ConstraintLayoutComposable() }
@@ -489,6 +490,28 @@ fun BasicTextComposable() {
                     )
                 )
             }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DynamicBlurComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "动态高斯模糊",
+                description = "A realtime blurring overlay (like iOS UIVisualEffectView). Just put it above the view you want to blur and it doesn't have to be in the same ViewGroup"
+            )
+        )
+        val context = LocalContext.current
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp), onClick = {
+                context.startActivity(Intent(context, AnimationEffectsActivity::class.java))
+            }) {
+            Text("查看效果")
         }
     }
 }
