@@ -70,6 +70,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -88,6 +89,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import coil.compose.AsyncImage
 import com.jetpack.compose.data.DataRepository
 import com.jetpack.compose.data.Message
 import com.jetpack.compose.data.TitleData
@@ -117,6 +119,7 @@ class MainActivity : ComponentActivity() {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
                             item { LocalImageComposable() }
+                            item { NetworkImageComposable() }
                             item { TextFieldComposable() }
                             item { BasicTextComposable() }
                             item { ClickableComposable() }
@@ -176,6 +179,34 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
+fun NetworkImageComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "从互联网加载图片",
+                description = "如需从互联网加载图片，有几个第三方库可协助您处理该流程。图片加载库可以为您完成许多繁重工作；而且可以同时处理缓存（这样您就不必多次下载图片）和网络逻辑，从而下载图片并在屏幕上进行显示。"
+            )
+        )
+        Column(modifier = Modifier.padding(10.dp)) {
+            Button(onClick = { /*TODO*/ }) {
+                Text("Focus Node")
+            }
+            val configuration = LocalConfiguration.current
+            AsyncImage(
+                model = "https://t7.baidu.com/it/u=3713375227,571533122&fm=193&f=GIF",
+                contentDescription = stringResource(id = R.string.app_name),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(configuration.screenWidthDp.dp / 2f)
+                    .clip(RoundedCornerShape(5.dp))
+                    .aspectRatio(2f)
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
+    }
+}
+
+@Composable
 fun LocalImageComposable() {
     Column {
         BuildTitle(
@@ -184,14 +215,20 @@ fun LocalImageComposable() {
                 description = "从磁盘加载图片（例如 PNG、JPEG、WEBP）或矢量资源，请将 painterResource API 与图片引用搭配使用。您不必知道资源的类型，只需在 Image 或 paint 修饰符中使用 painterResource 即可。"
             )
         )
-        Column(
-            modifier = Modifier
-                .padding(10.dp)
-        ) {
+        Column(modifier = Modifier.padding(10.dp)) {
+            Button(onClick = { /*TODO*/ }) {
+                Text("Focus Node")
+            }
+            val configuration = LocalConfiguration.current
             Image(
                 painter = painterResource(id = R.mipmap.banner),
                 contentDescription = stringResource(id = R.string.app_name),
-                modifier = Modifier.clip(RoundedCornerShape(5.dp))
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(configuration.screenWidthDp.dp / 2f)
+                    .clip(RoundedCornerShape(5.dp))
+                    .aspectRatio(2f)
+                    .align(Alignment.CenterHorizontally)
             )
         }
     }

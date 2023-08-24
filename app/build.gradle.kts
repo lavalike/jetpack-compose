@@ -85,7 +85,9 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    
+
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
     implementation(project(":blur"))
 
     testImplementation("junit:junit:4.13.2")
