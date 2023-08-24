@@ -6,4 +6,8 @@
         <item name="colorPrimaryDark">@color/purple_700</item>
         <item name="colorAccent">@color/purple_200</item>
     </style>
+
+    <style name="Theme.JetpackCompose.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>

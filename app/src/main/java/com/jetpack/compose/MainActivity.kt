@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -197,8 +198,9 @@ fun NetworkImageComposable() {
                 contentDescription = stringResource(id = R.string.app_name),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .width(configuration.screenWidthDp.dp / 2f)
+                    .width(configuration.screenWidthDp.dp * 2 / 3f)
                     .clip(RoundedCornerShape(5.dp))
+                    .background(color = Color.Gray)
                     .aspectRatio(2f)
                     .align(Alignment.CenterHorizontally)
             )
@@ -225,7 +227,7 @@ fun LocalImageComposable() {
                 contentDescription = stringResource(id = R.string.app_name),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .width(configuration.screenWidthDp.dp / 2f)
+                    .width(configuration.screenWidthDp.dp * 2 / 3f)
                     .clip(RoundedCornerShape(5.dp))
                     .aspectRatio(2f)
                     .align(Alignment.CenterHorizontally)
