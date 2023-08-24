@@ -116,6 +116,7 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item { LocalImageComposable() }
                             item { TextFieldComposable() }
                             item { BasicTextComposable() }
                             item { ClickableComposable() }
@@ -173,8 +174,30 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
+@Composable
+fun LocalImageComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "从磁盘加载图片",
+                description = "从磁盘加载图片（例如 PNG、JPEG、WEBP）或矢量资源，请将 painterResource API 与图片引用搭配使用。您不必知道资源的类型，只需在 Image 或 paint 修饰符中使用 painterResource 即可。"
+            )
+        )
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.mipmap.banner),
+                contentDescription = stringResource(id = R.string.app_name),
+                modifier = Modifier.clip(RoundedCornerShape(5.dp))
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldComposable() {
     Column {
