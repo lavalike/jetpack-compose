@@ -35,6 +35,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
@@ -48,9 +49,11 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -58,6 +61,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -75,6 +79,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -110,6 +116,7 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item { TextFieldComposable() }
                             item { BasicTextComposable() }
                             item { ClickableComposable() }
                             item { SelectionTextComposable() }
@@ -166,8 +173,59 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
+@Composable
+fun TextFieldComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "输入和修改文字",
+                description = "TextField 允许用户输入和修改文字。TextField 实现分为两个级别：\n" +
+                        "TextField 是 Material Design 实现。\n" +
+                        "BasicTextField 允许用户通过硬件或软件键盘编辑文本，但没有提供提示或占位符等装饰。"
+            )
+        )
+        val context = LocalContext.current
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+        ) {
+            var text by remember { mutableStateOf("Hello") }
+            TextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = text,
+                onValueChange = { text = it },
+                label = { Text("Material Design") },
+            )
+
+            var outlinedText by remember { mutableStateOf("Hello") }
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = outlinedText,
+                onValueChange = { outlinedText = it },
+                label = { Text("轮廓样式") },
+                maxLines = 2,
+                textStyle = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Blue,
+                )
+            )
+
+            var password by rememberSaveable { mutableStateOf("123456") }
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Enter Password") },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            )
+        }
+    }
+}
+
+
 @Composable
 fun ClickableComposable() {
     Column {
@@ -494,7 +552,6 @@ fun BasicTextComposable() {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
 fun DynamicBlurComposable() {
     Column {
