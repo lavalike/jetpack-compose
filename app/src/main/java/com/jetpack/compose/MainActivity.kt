@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -66,9 +67,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -92,7 +99,6 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.jetpack.compose.data.DataRepository
-import com.jetpack.compose.data.Message
 import com.jetpack.compose.data.TitleData
 import com.jetpack.compose.ui.theme.JetpackComposeTheme
 
@@ -119,6 +125,10 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item { ImageBlurComposable() }
+                            item { ImageColorMatrixComposable() }
+                            item { ImageColorFilterComposable() }
+                            item { BuildMessageCard() }
                             item { LocalImageComposable() }
                             item { NetworkImageComposable() }
                             item { TextFieldComposable() }
@@ -132,18 +142,6 @@ class MainActivity : ComponentActivity() {
                             item { ConstraintLayoutComposable() }
                             item { IntrinsicHeightComposable() }
                             item { ButtonComposable() }
-                            item {
-                                BuildTitle(
-                                    TitleData(
-                                        title = "控件",
-                                        description = "Jetpack Compose 是用于构建原生 Android 界面的新工具包。它使用更少的代码、强大的工具和直观的 Kotlin API，可以帮助您简化并加快 Android 界面开发。"
-                                    )
-                                )
-                            }
-                            val cards = DataRepository.provideMessageCards()
-                            items(cards.size) { index ->
-                                BuildMessageCard(message = cards[index])
-                            }
                             item { WithConstraintsComposable() }
                             item { BuildPictureHorizontalGrid() }
                             item { BuildPictureVerticalGrid() }
@@ -180,6 +178,159 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
+fun ImageBlurComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "对 Image 可组合项进行模糊处理",
+                description = "如需对图片进行模糊处理，请使用 Modifier.blur() 并同时提供 radiusX 和 radiusY，两者分别指定水平方向和垂直方向的模糊半径。"
+            )
+        )
+        Column(modifier = Modifier.padding(10.dp)) {
+            val configuration = LocalConfiguration.current
+            Image(
+                painter = painterResource(id = R.mipmap.banner),
+                contentDescription = stringResource(id = R.string.app_name),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(configuration.screenWidthDp.dp * 2 / 3f)
+                    .aspectRatio(2f)
+                    .blur(
+                        radiusX = 20.dp,
+                        radiusY = 20.dp,
+                        edgeTreatment = BlurredEdgeTreatment(RoundedCornerShape(5.dp))
+                    ),
+            )
+        }
+    }
+}
+
+@Composable
+fun ImageColorMatrixComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "通过颜色矩阵应用图片滤镜",
+                description = "颜色矩阵 ColorFilter 选项可用于转换图片。例如，如需对图片应用黑白滤镜，您可以使用 ColorMatrix 并将饱和度设置为 0f。"
+            )
+        )
+        Column(modifier = Modifier.padding(10.dp)) {
+            val configuration = LocalConfiguration.current
+            Image(
+                painter = painterResource(id = R.mipmap.banner),
+                contentDescription = stringResource(id = R.string.app_name),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(configuration.screenWidthDp.dp * 2 / 3f)
+                    .clip(RoundedCornerShape(5.dp))
+                    .aspectRatio(2f),
+                colorFilter = ColorFilter.colorMatrix(colorMatrix = ColorMatrix().apply {
+                    setToSaturation(0f)
+                })
+            )
+        }
+    }
+}
+
+@Composable
+fun ImageColorFilterComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "对图片进行色调调节",
+                description = "使用 ColorFilter.tint(color, blendMode) 会将具有指定颜色的混合模式应用于 Image 可组合项。ColorFilter.tint(color, blendMode) 使用 BlendMode.SrcIn 对内容进行色调调节，这意味着系统将在屏幕上显示图片的位置显示所提供的颜色。这对于需要以不同方式设置主题的图标和矢量非常有用。"
+            )
+        )
+        Column(modifier = Modifier.padding(10.dp)) {
+            val configuration = LocalConfiguration.current
+            Image(
+                painter = painterResource(id = R.mipmap.banner),
+                contentDescription = stringResource(id = R.string.app_name),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(configuration.screenWidthDp.dp * 2 / 3f)
+                    .clip(RoundedCornerShape(5.dp))
+                    .aspectRatio(2f),
+                colorFilter = ColorFilter.tint(Color.Green, blendMode = BlendMode.Darken)
+            )
+        }
+    }
+}
+
+@Composable
+fun BuildMessageCard() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "控件",
+                description = "Jetpack Compose 是用于构建原生 Android 界面的新工具包。它使用更少的代码、强大的工具和直观的 Kotlin API，可以帮助您简化并加快 Android 界面开发。"
+            )
+        )
+
+        Row(modifier = Modifier.padding(all = 10.dp)) {
+            val rainbowColorBrush = remember {
+                Brush.sweepGradient(
+                    listOf(
+                        Color(0xFF9575CD),
+                        Color(0xFFBA68C8),
+                        Color(0xFFE57373),
+                        Color(0xFFFFB74D),
+                        Color(0xFFFFF176),
+                        Color(0xFFAED581),
+                        Color(0xFF4DD0E1),
+                        Color(0xFF9575CD)
+                    )
+                )
+            }
+            Image(
+                painter = painterResource(id = R.mipmap.banner),
+                contentDescription = stringResource(
+                    id = R.string.app_name
+                ),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(size = 80.dp)
+                    .clip(CircleShape)
+                    .border(
+                        BorderStroke(3.dp, rainbowColorBrush), CircleShape,
+                    )
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Column {
+                Text(
+                    text = "Colleague", color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.titleLarge,
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+
+                var expand by remember { mutableStateOf(false) }
+
+                Surface(
+                    shape = MaterialTheme.shapes.medium,
+                    color = if (expand) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+                    shadowElevation = 1.dp,
+                    tonalElevation = 1.dp,
+                    modifier = Modifier.animateContentSize(),
+                ) {
+                    Text(
+                        text = "Hey, take a look at Jetpack Compose, it's great! We toggle the expand variable when we click on this Column",
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .clickable {
+                                expand = !expand
+                            },
+                        maxLines = if (expand) Int.MAX_VALUE else 2,
+                        overflow = TextOverflow.Ellipsis,
+                        color = if (expand) Color.White else MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun NetworkImageComposable() {
     Column {
         BuildTitle(
@@ -202,7 +353,6 @@ fun NetworkImageComposable() {
                     .clip(RoundedCornerShape(5.dp))
                     .background(color = Color.Gray)
                     .aspectRatio(2f)
-                    .align(Alignment.CenterHorizontally)
             )
         }
     }
@@ -230,7 +380,6 @@ fun LocalImageComposable() {
                     .width(configuration.screenWidthDp.dp * 2 / 3f)
                     .clip(RoundedCornerShape(5.dp))
                     .aspectRatio(2f)
-                    .align(Alignment.CenterHorizontally)
             )
         }
     }
@@ -884,16 +1033,6 @@ private fun BuildPictureVerticalGrid() {
 }
 
 @Composable
-private fun BuildMessageCard(message: Message) {
-    MessageCard(
-        Message(
-            message.author,
-            message.body,
-        )
-    )
-}
-
-@Composable
 fun BuildTitle(data: TitleData) {
     Column(modifier = Modifier.padding(top = 10.dp, start = 10.dp, end = 10.dp, bottom = 5.dp)) {
         Text(
@@ -906,81 +1045,5 @@ fun BuildTitle(data: TitleData) {
             color = Color.Black,
             style = MaterialTheme.typography.bodySmall
         )
-    }
-}
-
-@Composable
-fun MessageCard(data: Message) {
-    Row(modifier = Modifier.padding(all = 10.dp)) {
-        Image(
-            painter = painterResource(id = R.mipmap.banner),
-            contentDescription = stringResource(
-                id = R.string.app_name
-            ),
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(size = 80.dp)
-                .clip(CircleShape)
-                .border(
-                    1.5.dp, MaterialTheme.colorScheme.primary,
-                    CircleShape,
-                )
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        Column {
-            Text(
-                text = data.author, color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.titleLarge,
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-
-            var expand by remember { mutableStateOf(false) }
-
-            Surface(
-                shape = MaterialTheme.shapes.medium,
-                color = if (expand) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-                shadowElevation = 1.dp,
-                tonalElevation = 1.dp,
-                modifier = Modifier.animateContentSize(),
-            ) {
-                Text(
-                    text = data.body,
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .clickable {
-                            expand = !expand
-                        },
-                    maxLines = if (expand) Int.MAX_VALUE else 2,
-                    overflow = TextOverflow.Ellipsis,
-                    color = if (expand) Color.White else MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
-        }
-    }
-}
-
-
-//@Preview(
-//    name = "Light Mode",
-//    showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_NO
-//)
-//@Preview(
-//    name = "Night Mode",
-//    showBackground = true,
-//    uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-@Composable
-fun MessageCardPreview() {
-    JetpackComposeTheme {
-        Surface {
-            MessageCard(
-                Message(
-                    "Colleague",
-                    "Hey, take a look at Jetpack Compose, it's great! We toggle the expand variable when we click on this Column"
-                )
-            )
-        }
     }
 }
