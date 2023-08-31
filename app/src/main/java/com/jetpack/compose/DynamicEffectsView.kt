@@ -30,7 +30,7 @@ class DynamicEffectsView @JvmOverloads constructor(
 
     companion object {
         const val CIRCLE_DURATION = 1500L
-        const val LAYER_DURATION = 1000L * 50
+        const val LAYER_DURATION = 1000L * 180
     }
 
     private val defaultSize = dip2px(150f)
@@ -154,7 +154,6 @@ class DynamicEffectsView @JvmOverloads constructor(
 
     private fun drawMiddleLayer(canvas: Canvas) {
         canvas.save()
-        canvas.scale(2.5f, 2.5f, width / 2f, height / 2f)
         canvas.rotate(degrees, width / 2f, height / 2f)
         canvas.drawBitmap(layerBitmap, null, screenRectF, bitmapPaint)
         canvas.restore()

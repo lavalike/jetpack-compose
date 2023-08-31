@@ -125,6 +125,7 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item { DynamicBlurComposable() }
                             item { ImageBlurComposable() }
                             item { ImageColorMatrixComposable() }
                             item { ImageColorFilterComposable() }
@@ -136,7 +137,6 @@ class MainActivity : ComponentActivity() {
                             item { ClickableComposable() }
                             item { SelectionTextComposable() }
                             item { NativeEmbedComposable() }
-                            item { DynamicBlurComposable() }
                             item { ConstraintChainStyleComposable() }
                             item { ConstraintBarrierComposable() }
                             item { ConstraintLayoutComposable() }
