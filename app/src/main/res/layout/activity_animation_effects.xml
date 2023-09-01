@@ -17,5 +17,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:blurRadius="25dp"
-        app:overlayColor="#B3000000" />
+        app:overlayColor="#80000000" />
 </FrameLayout>

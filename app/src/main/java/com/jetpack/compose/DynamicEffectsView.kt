@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.RadialGradient
 import android.graphics.RectF
 import android.graphics.Shader
@@ -38,9 +40,9 @@ class DynamicEffectsView @JvmOverloads constructor(
     private var height = 0
     private val leftCenterX by lazy { width * 1f / 2 }
     private val leftCenterY by lazy { height * 2f / 3 }
-    private val rightCenterX by lazy { width * 3f / 4 }
-    private val rightCenterY by lazy { height * 1f / 3 }
-    private val circleRadius by lazy { height * 1f }
+    private val rightCenterX by lazy { width * 3f / 5 }
+    private val rightCenterY by lazy { height * 1f / 2 }
+    private val circleRadius by lazy { height * 3f / 4 }
 
     private var degrees = 0f
     private val screenRectF = RectF()
@@ -72,7 +74,8 @@ class DynamicEffectsView @JvmOverloads constructor(
         Paint().apply {
             isAntiAlias = true
             style = Paint.Style.FILL
-            alpha = (255 * 0.2).toInt()
+            alpha = (255 * 0.5).toInt()
+            xfermode = PorterDuffXfermode(PorterDuff.Mode.OVERLAY)
         }
     }
 
