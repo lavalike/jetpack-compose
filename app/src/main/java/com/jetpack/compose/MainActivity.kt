@@ -17,6 +17,8 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -84,6 +86,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -135,6 +138,7 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(contentPadding)) {
                         val listState = rememberLazyListState()
                         LazyColumn(state = listState) {
+                            item { SwipeableComposable() }
                             item { DragComposable() }
                             item { GestureDetectComposable() }
                             item { DynamicBlurComposable() }
@@ -189,6 +193,53 @@ class MainActivity : ComponentActivity() {
 }
 
 @Preview(showBackground = true)
+@Composable
+fun SwipeableComposable() {
+    Column {
+        BuildTitle(
+            TitleData(
+                title = "多点触控：平移、缩放、旋转",
+                description = "如需检测用于平移、缩放和旋转的多点触控手势，您可以使用 transformable 修饰符。此修饰符本身不会转换元素，只会检测手势。"
+            )
+        )
+
+        // set up all transformation states
+        var scale by remember { mutableStateOf(1f) }
+        var rotation by remember { mutableStateOf(0f) }
+        var offset by remember { mutableStateOf(Offset.Zero) }
+        val state = rememberTransformableState { zoomChange, offsetChange, rotationChange ->
+            scale *= zoomChange
+            rotation += rotationChange
+            offset += offsetChange
+        }
+        Box(
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth()
+                .height(200.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            Box(
+                Modifier
+                    .size(100.dp)
+                    // apply other transformations like rotation and zoom
+                    // on the pizza slice emoji
+                    .graphicsLayer(
+                        scaleX = scale,
+                        scaleY = scale,
+                        rotationZ = rotation,
+                        translationX = offset.x,
+                        translationY = offset.y
+                    )
+                    // add transformable to listen to multitouch transformation events
+                    // after offset
+                    .transformable(state = state)
+                    .background(Color.Blue)
+            )
+        }
+    }
+}
+
 @Composable
 fun DragComposable() {
     Column {
