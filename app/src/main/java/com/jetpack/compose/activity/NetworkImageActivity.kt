@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jetpack.compose.R
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.base.BuildPage
 import com.jetpack.compose.data.HeaderData
 
@@ -42,7 +42,7 @@ class NetworkImageActivity : ComponentActivity() {
 @Composable
 fun NetworkImageComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "如需从互联网加载图片，有几个第三方库可协助您处理该流程。图片加载库可以为您完成许多繁重工作；而且可以同时处理缓存（这样您就不必多次下载图片）和网络逻辑，从而下载图片并在屏幕上进行显示。"
             )

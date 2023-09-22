@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.base.BuildPage
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -41,7 +41,7 @@ class SelectionContainerActivity : ComponentActivity() {
 @Composable
 fun SelectionTextComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "默认情况下，可组合项不可选择，这意味着在默认情况下用户无法从您的应用中选择和复制文字。要启用文字选择，需要使用 SelectionContainer 可组合项封装文字元素。\n您可能想为可选择区域的特定部分停用选择功能。如果要执行此操作，您需要使用 DisableSelection 可组合项来封装不可选择的部分。"
             )

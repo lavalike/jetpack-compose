@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.jetpack.compose.base.BuildPage
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -41,7 +41,7 @@ class ConstraintChainStyleActivity : ComponentActivity() {
 @Composable
 fun ConstraintChainStyleComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "链在单条轴（水平或垂直方向）上提供类似于组的行为。另一条轴可单独约束。\n链可通过不同的 ChainStyles（决定了可组合项周围空间的处理方式）配置，例如：\nChainStyle.Spread：空间会在所有可组合项之间均匀分布，包括第一个可组合项之前和最后一个可组合项之后的可用空间\nChainStyle.SpreadInside：空间会在所有可组合项之间均匀分布，不包括第一个可组合项之前或最后一个可组合项之后的任何可用空间\nChainStyle.Packed：空间会分布在第一个可组合项之前和最后一个可组合项之后，各个可组合项之间没有空间，会挤在一起"
             )

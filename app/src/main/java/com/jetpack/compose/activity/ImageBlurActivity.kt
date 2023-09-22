@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.R
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.base.BuildPage
 import com.jetpack.compose.data.HeaderData
 
@@ -42,7 +42,7 @@ class ImageBlurActivity : ComponentActivity() {
 @Composable
 fun ImageBlurComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "如需对图片进行模糊处理，请使用 Modifier.blur() 并同时提供 radiusX 和 radiusY，两者分别指定水平方向和垂直方向的模糊半径。"
             )

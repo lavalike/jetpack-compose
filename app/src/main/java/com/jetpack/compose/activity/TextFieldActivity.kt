@@ -26,7 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.base.BuildPage
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -50,7 +50,7 @@ class TextFieldActivity : ComponentActivity() {
 @Composable
 fun TextFieldComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "TextField 允许用户输入和修改文字。TextField 实现分为两个级别：\n" +
                         "TextField 是 Material Design 实现。\n" +

@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.R
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.base.BuildPage
 import com.jetpack.compose.data.HeaderData
 
@@ -43,7 +43,7 @@ class ImageColorMatrixActivity : ComponentActivity() {
 @Composable
 fun ImageColorMatrixComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "颜色矩阵 ColorFilter 选项可用于转换图片。例如，如需对图片应用黑白滤镜，您可以使用 ColorMatrix 并将饱和度设置为 0f。"
             )

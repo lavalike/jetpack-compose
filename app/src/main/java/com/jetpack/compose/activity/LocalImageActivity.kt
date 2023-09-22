@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.R
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.base.BuildPage
 import com.jetpack.compose.data.HeaderData
 
@@ -41,7 +41,7 @@ class LocalImageActivity : ComponentActivity() {
 @Composable
 fun LocalImageComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "从磁盘加载图片（例如 PNG、JPEG、WEBP）或矢量资源，请将 painterResource API 与图片引用搭配使用。您不必知道资源的类型，只需在 Image 或 paint 修饰符中使用 painterResource 即可。"
             )

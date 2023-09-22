@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.base.BuildPage
 import com.jetpack.compose.data.HeaderData
 
@@ -48,7 +48,7 @@ class BasicTextActivity : ComponentActivity() {
 @Composable
 fun BasicTextComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "文字对任何界面都属于核心内容，而利用 Jetpack Compose 可以更轻松地显示或写入文字。Compose 可以充分利用其构建块的组合，这意味着您无需覆盖各种属性和方法，也无需扩展大型类，即可拥有特定的可组合项设计以及按您期望的方式运行的逻辑。"
             )

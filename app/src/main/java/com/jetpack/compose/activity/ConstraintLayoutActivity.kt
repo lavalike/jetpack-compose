@@ -18,7 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.jetpack.compose.base.BuildPage
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -41,7 +41,7 @@ class ConstraintLayoutActivity : ComponentActivity() {
 @Composable
 fun ConstraintLayoutComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "ConstraintLayout 是一种布局，让您可以相对于屏幕上的其他可组合项来放置可组合项。它是一种实用的替代方案，可代替使用多个已嵌套的 Row、Column、Box 和其他自定义布局元素这种做法。在实现对齐要求比较复杂的较大布局时，ConstraintLayout 很有用。\n在 View 系统中，建议使用 ConstraintLayout 来创建复杂的大型布局，因为扁平视图层次结构比嵌套视图的效果更好。不过，这在 Compose 中不是什么问题，因为 Compose 能够高效地处理较深的布局层次结构。"
             )

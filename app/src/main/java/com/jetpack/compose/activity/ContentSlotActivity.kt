@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.base.BuildPage
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -41,7 +41,7 @@ class ContentSlotActivity : ComponentActivity() {
 @Composable
 fun ButtonComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "支持内部内容（文本标签、图标等）的 Material 组件往往会提供“槽”（即接受可组合内容的通用 lambda），而且还会提供尺寸和内边距等公共常量，从而支持设置内部内容的布局，使之符合 Material 规范。例如：Button"
             )

@@ -26,7 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.base.BuildPage
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -49,7 +49,7 @@ class GestureDetectActivity : ComponentActivity() {
 @Composable
 fun GestureDetectComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "Compose 提供了多种 API，可帮助您检测用户互动生成的手势。" +
                         "\n其中一些级别较高，旨在覆盖最常用的手势。例如，clickable 修饰符可用于轻松检测点击，此外它还提供无障碍功能，并在点按时显示视觉指示（例如涟漪）。" +

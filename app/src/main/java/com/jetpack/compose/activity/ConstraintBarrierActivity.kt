@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.jetpack.compose.base.BuildPage
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -40,7 +40,7 @@ class ConstraintBarrierActivity : ComponentActivity() {
 @Composable
 fun ConstraintBarrierComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "屏障线会引用多个可组合项，从而根据所指定边中处于最边缘位置的 widget 创建虚拟引导线。\n若要创建屏障线，请使用 createTopBarrier()（或 createBottomBarrier()、createEndBarrier()、createStartBarrier()），并提供构成屏障线的引用。"
             )

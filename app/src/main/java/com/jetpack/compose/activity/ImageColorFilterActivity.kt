@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.R
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.base.BuildPage
 import com.jetpack.compose.data.HeaderData
 
@@ -44,7 +44,7 @@ class ImageColorFilterActivity : ComponentActivity() {
 @Composable
 fun ImageColorFilterComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "使用 ColorFilter.tint(color, blendMode) 会将具有指定颜色的混合模式应用于 Image 可组合项。ColorFilter.tint(color, blendMode) 使用 BlendMode.SrcIn 对内容进行色调调节，这意味着系统将在屏幕上显示图片的位置显示所提供的颜色。这对于需要以不同方式设置主题的图标和矢量非常有用。"
             )

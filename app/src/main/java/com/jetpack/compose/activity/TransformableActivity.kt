@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.base.BuildPage
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -47,7 +47,7 @@ class TransformableActivity : ComponentActivity() {
 @Composable
 fun SwipeableComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "如需检测用于平移、缩放和旋转的多点触控手势，您可以使用 transformable 修饰符。此修饰符本身不会转换元素，只会检测手势。"
             )

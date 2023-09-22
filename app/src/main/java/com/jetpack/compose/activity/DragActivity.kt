@@ -30,7 +30,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.base.BuildPage
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 import kotlin.math.roundToInt
 
@@ -54,7 +54,7 @@ class DragActivity : ComponentActivity() {
 @Composable
 fun DragComposable() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "draggable 修饰符是向单一方向拖动手势的高级入口点，并且会报告拖动距离（以像素为单位），此修饰符与 scrollable 类似，仅检测手势。您需要保存状态并在屏幕上表示，例如通过 offset 修饰符移动元素。"
             )

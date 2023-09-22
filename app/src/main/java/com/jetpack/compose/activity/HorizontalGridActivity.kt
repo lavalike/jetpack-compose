@@ -20,7 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.base.BuildPage
 import com.jetpack.compose.data.DataRepository
 import com.jetpack.compose.data.HeaderData
@@ -45,7 +45,7 @@ class HorizontalGridActivity : ComponentActivity() {
 @Composable
 private fun BuildPictureHorizontalGrid() {
     Column {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 "LazyVerticalGrid 和 LazyHorizontalGrid 可组合项为在网格中显示列表项提供支持。延迟垂直网格会在可垂直滚动容器中跨多个列显示其列表项，而延迟水平网格则会在水平轴上有相同的行为。"
             )

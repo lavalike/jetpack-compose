@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jetpack.compose.base.BuildHeader
+import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.base.BuildPage
 import com.jetpack.compose.data.HeaderData
 
@@ -79,7 +79,7 @@ fun BuildContent() {
 //    battery_low : false
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        BuildHeader(
+        BuildSection(
             HeaderData(
                 text = "利用 LocalContext 来使用当前上下文以及 rememberUpdatedState 和 DisposableEffect 附带效应"
             )
