@@ -2,6 +2,7 @@ package com.jetpack.compose.data
 
 import com.jetpack.compose.R
 import com.jetpack.compose.activity.AnimationEffectsActivity
+import com.jetpack.compose.activity.BasicTextActivity
 import com.jetpack.compose.activity.BasicUiActivity
 import com.jetpack.compose.activity.BroadcastReceiverActivity
 import com.jetpack.compose.activity.ConstraintBarrierActivity
@@ -64,7 +65,7 @@ object DataRepository {
         IndexEntity("基本控件", BasicUiActivity::class.java),
         IndexEntity("网络图片", NetworkImageActivity::class.java),
         IndexEntity("本地图片", LocalImageActivity::class.java),
-        IndexEntity("基本文本", BroadcastReceiverActivity::class.java),
+        IndexEntity("基本文本", BasicTextActivity::class.java),
         IndexEntity("文本输入", TextFieldActivity::class.java),
         IndexEntity("文本点击", TextClickableActivity::class.java),
         IndexEntity("文本选择", SelectionContainerActivity::class.java),
