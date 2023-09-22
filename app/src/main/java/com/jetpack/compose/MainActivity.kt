@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +17,10 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.Phone
+import androidx.compose.material.icons.rounded.Send
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -31,7 +37,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jetpack.compose.data.DataRepository
 import com.jetpack.compose.data.IndexEntity
 import com.jetpack.compose.ui.theme.JetpackComposeTheme
@@ -80,14 +88,14 @@ fun BuildItem(data: IndexEntity) {
     val context = LocalContext.current
     Surface(
         shape = MaterialTheme.shapes.medium,
-        color = MaterialTheme.colorScheme.surface,
+        color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(2.5f)
+            .aspectRatio(2f)
             .clip(RoundedCornerShape(5.dp))
             .padding(10.dp),
-        shadowElevation = 1.dp,
-        tonalElevation = 1.dp,
+        shadowElevation = 2.dp,
+        tonalElevation = 2.dp,
     ) {
         Box(
             modifier = Modifier.clickable {
@@ -95,7 +103,18 @@ fun BuildItem(data: IndexEntity) {
             },
             contentAlignment = Alignment.Center
         ) {
-            Text(text = data.title)
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Icon(Icons.Rounded.Send, contentDescription = null)
+                Text(
+                    text = data.title,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 6.dp),
+                )
+            }
         }
     }
 }
