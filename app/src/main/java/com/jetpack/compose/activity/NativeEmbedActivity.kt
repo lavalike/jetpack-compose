@@ -1,4 +1,4 @@
-package com.jetpack.compose
+package com.jetpack.compose.activity
 
 import android.app.Activity
 import android.os.Bundle
@@ -23,12 +23,12 @@ import com.jetpack.compose.databinding.ActivitySecondBinding
 import com.jetpack.compose.ui.theme.JetpackComposeTheme
 
 /**
- * SecondActivity
+ * NativeEmbedActivity
  *
  * @author : zhen51.wang
  * @date : 2023/8/10/010
  */
-class SecondActivity : AppCompatActivity() {
+class NativeEmbedActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySecondBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

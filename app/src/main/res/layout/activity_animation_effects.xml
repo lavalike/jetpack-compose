@@ -7,9 +7,9 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="vertical"
-    tools:context=".AnimationEffectsActivity">
+    tools:context=".activity.AnimationEffectsActivity">
 
-    <com.jetpack.compose.DynamicEffectsView
+    <com.jetpack.compose.view.DynamicEffectsView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

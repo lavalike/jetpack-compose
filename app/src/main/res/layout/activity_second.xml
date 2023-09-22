@@ -7,7 +7,7 @@
     android:clipToPadding="false"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".SecondActivity">
+    tools:context=".activity.NativeEmbedActivity">
 
     <Button
         android:id="@+id/btn_native1"

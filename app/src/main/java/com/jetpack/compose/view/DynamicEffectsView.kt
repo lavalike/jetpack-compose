@@ -1,4 +1,4 @@
-package com.jetpack.compose
+package com.jetpack.compose.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -17,6 +17,7 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
+import com.jetpack.compose.R
 
 /**
  * DynamicEffectsView
