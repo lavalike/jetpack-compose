@@ -85,7 +85,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.recyclerview:recyclerview:1.2.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
 
     implementation("io.coil-kt:coil-compose:2.4.0")
 
