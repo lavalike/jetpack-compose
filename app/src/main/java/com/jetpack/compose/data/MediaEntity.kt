@@ -10,5 +10,7 @@ data class MediaEntity(
     val cover: Int,
     val name: String,
     val actors: List<String>? = null,
-    val tag: String,
+    val tag: String? = null,
+    val views: String? = null,
+    val talks: String? = null,
 )

@@ -6,8 +6,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,8 +18,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -114,7 +118,7 @@ fun MediaItem(data: MediaEntity) {
                 .fillMaxWidth()
                 .padding(15.dp)
         ) {
-            val (cover, name, actors) = createRefs()
+            val (cover, name, actors, views, close) = createRefs()
 
             Image(
                 painter = painterResource(id = data.cover), contentDescription = null,
@@ -152,31 +156,92 @@ fun MediaItem(data: MediaEntity) {
                         bottom.linkTo(cover.bottom)
                     }
             )
+
+            Text(
+                text = data.views ?: "暂无观看数据",
+                fontSize = 14.sp,
+                color = Color(0xFFA0A4A9),
+                modifier = Modifier
+                    .constrainAs(views) {
+                        bottom.linkTo(actors.bottom)
+                        end.linkTo(parent.end)
+                    }
+            )
+            Icon(
+                imageVector = Icons.Filled.Close,
+                contentDescription = null,
+                tint = Color(0xFF9B5503),
+                modifier = Modifier
+                    .size(20.dp)
+                    .constrainAs(close) {
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end)
+                    }
+                    .clickable {}
+            )
         }
         Row(
             modifier = Modifier
                 .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
-                .background(color = Color(0X33F18E1A), shape = RoundedCornerShape(10.dp))
-                .padding(start = 8.dp, end = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(
-                imageVector = Icons.Filled.Home,
-                contentDescription = null,
-                tint = Color(0xFF9B5503),
-                modifier = Modifier.size(17.dp)
-            )
-            Text(
-                text = data.tag,
-                color = Color(0xFF9B5503),
-                fontSize = 14.sp,
-            )
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowRight,
-                contentDescription = null,
-                tint = Color(0xFF9B5503),
-                modifier = Modifier.size(17.dp)
-            )
+            data.tag?.let { tag ->
+                Row(
+                    modifier = Modifier
+                        .background(color = Color(0X33F18E1A), shape = RoundedCornerShape(10.dp))
+                        .padding(start = 8.dp, end = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ThumbUp,
+                        contentDescription = null,
+                        tint = Color(0xFF9B5503),
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Text(
+                        text = tag,
+                        color = Color(0xFF9B5503),
+                        fontSize = 14.sp,
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowRight,
+                        contentDescription = null,
+                        tint = Color(0xFF9B5503),
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
+
+            data.talks?.let { talks ->
+                Row(
+                    modifier = Modifier
+                        .padding(start = if (data.tag.isNullOrEmpty()) 0.dp else 10.dp)
+                        .background(color = Color(0X33F18E1A), shape = RoundedCornerShape(10.dp))
+                        .padding(start = 8.dp, end = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = null,
+                        tint = Color(0xFF9B5503),
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Text(
+                        text = talks,
+                        color = Color(0xFF9B5503),
+                        fontSize = 14.sp,
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowRight,
+                        contentDescription = null,
+                        tint = Color(0xFF9B5503),
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
         }
     }
 }

@@ -82,40 +82,48 @@ object DataRepository {
 
     fun provideRecycler() = listOf(
         MediaEntity(
-            cover = R.mipmap.video_snow,
-            name = "雪中悍刀行",
-            actors = listOf("张若昀 李庚希 英雄成长"),
-            tag = "讨论破50万"
-        ),
-        MediaEntity(
             cover = R.mipmap.video_long_season,
             name = "漫长的季节",
             actors = listOf("范伟 秦昊 探寻真相 侦破悬案"),
-            tag = "悬疑剧榜第8名"
+            tag = "悬疑剧榜第8名",
+            views = "690万在追"
+        ),
+        MediaEntity(
+            cover = R.mipmap.video_quedaomen,
+            name = "鹊刀门传奇",
+            actors = listOf("赵本山 宋小宝 宋晓峰 古装喜剧"),
+            tag = "喜剧剧榜第2名",
+            views = "91万在追"
+        ),
+        MediaEntity(
+            cover = R.mipmap.video_snow,
+            name = "雪中悍刀行",
+            actors = listOf("张若昀 李庚希 英雄成长"),
+            tag = null,
+            talks = "讨论破100万",
+            views = "785万在追"
         ),
         MediaEntity(
             cover = R.mipmap.video_never_say_never,
             name = "八角笼中",
             actors = listOf("王宝强 陈永胜 体育竞技"),
-            tag = "电影热播榜第4名 讨论破10万"
+            tag = "电影热播榜第4名",
+            talks = "讨论破10万",
+            views = "108万在追"
         ),
         MediaEntity(
             cover = R.mipmap.video_qingyunian,
             name = "庆余年",
             actors = listOf("张若昀 李沁 英雄成长 小说改编"),
-            tag = "传奇剧榜第1名"
-        ),
-        MediaEntity(
-            cover = R.mipmap.video_ghost,
-            name = "鬼吹灯之精绝古城",
-            actors = listOf("靳东 陈乔恩 小说改编 沙漠探险"),
-            tag = "猎奇剧榜第5名 讨论破10万"
+            tag = "传奇剧榜第1名",
+            views = "530万在追"
         ),
         MediaEntity(
             cover = R.mipmap.video_magic_phone,
             name = "魔幻手机2：傻妞归来",
             actors = listOf("李滨 舒畅 奇幻喜剧 正邪对抗"),
-            tag = "傻妞再次拯救地球和人类"
+            tag = "傻妞再次拯救地球和人类",
+            views = "102万在追"
         ),
     )
 }
