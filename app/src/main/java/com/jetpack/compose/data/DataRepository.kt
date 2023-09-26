@@ -19,6 +19,7 @@ import com.jetpack.compose.activity.IntrinsicHeightActivity
 import com.jetpack.compose.activity.LocalImageActivity
 import com.jetpack.compose.activity.NativeEmbedActivity
 import com.jetpack.compose.activity.NetworkImageActivity
+import com.jetpack.compose.activity.RecyclerEmbedActivity
 import com.jetpack.compose.activity.SelectionContainerActivity
 import com.jetpack.compose.activity.TextClickableActivity
 import com.jetpack.compose.activity.TextFieldActivity
@@ -53,6 +54,7 @@ object DataRepository {
     )
 
     fun index() = listOf(
+        IndexEntity("RecyclerView", RecyclerEmbedActivity::class.java),
         IndexEntity("广播", BroadcastReceiverActivity::class.java),
         IndexEntity("原生内嵌", NativeEmbedActivity::class.java),
         IndexEntity("多点触控", TransformableActivity::class.java),
@@ -76,5 +78,44 @@ object DataRepository {
         IndexEntity("内容槽", ContentSlotActivity::class.java),
         IndexEntity("横向Grid", HorizontalGridActivity::class.java),
         IndexEntity("纵向Grid", VerticalGridActivity::class.java),
+    )
+
+    fun provideRecycler() = listOf(
+        MediaEntity(
+            cover = R.mipmap.video_snow,
+            name = "雪中悍刀行",
+            actors = listOf("张若昀 李庚希 英雄成长"),
+            tag = "讨论破50万"
+        ),
+        MediaEntity(
+            cover = R.mipmap.video_long_season,
+            name = "漫长的季节",
+            actors = listOf("范伟 秦昊 探寻真相 侦破悬案"),
+            tag = "悬疑剧榜第8名"
+        ),
+        MediaEntity(
+            cover = R.mipmap.video_never_say_never,
+            name = "八角笼中",
+            actors = listOf("王宝强 陈永胜 体育竞技"),
+            tag = "电影热播榜第4名 讨论破10万"
+        ),
+        MediaEntity(
+            cover = R.mipmap.video_qingyunian,
+            name = "庆余年",
+            actors = listOf("张若昀 李沁 英雄成长 小说改编"),
+            tag = "传奇剧榜第1名"
+        ),
+        MediaEntity(
+            cover = R.mipmap.video_ghost,
+            name = "鬼吹灯之精绝古城",
+            actors = listOf("靳东 陈乔恩 小说改编 沙漠探险"),
+            tag = "猎奇剧榜第5名 讨论破10万"
+        ),
+        MediaEntity(
+            cover = R.mipmap.video_magic_phone,
+            name = "魔幻手机2：傻妞归来",
+            actors = listOf("李滨 舒畅 奇幻喜剧 正邪对抗"),
+            tag = "傻妞再次拯救地球和人类"
+        ),
     )
 }
