@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
@@ -30,7 +30,7 @@ class ConstraintBarrierActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "Constraint屏障") {
+            AppPage(title = "Constraint屏障") {
                 ConstraintBarrierComposable()
             }
         }

@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
@@ -35,7 +35,7 @@ class IntrinsicHeightActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "固有特性") {
+            AppPage(title = "固有特性") {
                 IntrinsicHeightComposable()
             }
         }

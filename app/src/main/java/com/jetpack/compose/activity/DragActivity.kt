@@ -29,7 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 import kotlin.math.roundToInt
@@ -44,7 +44,7 @@ class DragActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "拖动") {
+            AppPage(title = "拖动") {
                 DragComposable()
             }
         }

@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
@@ -39,7 +39,7 @@ class TextFieldActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "文本输入") {
+            AppPage(title = "文本输入") {
                 TextFieldComposable()
             }
         }

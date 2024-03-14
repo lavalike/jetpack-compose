@@ -17,7 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.base.BuildSection
 import com.jetpack.compose.data.HeaderData
 
@@ -31,7 +31,7 @@ class ContentSlotActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "内容槽") {
+            AppPage(title = "内容槽") {
                 ButtonComposable()
             }
         }

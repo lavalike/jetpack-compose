@@ -20,7 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.base.BuildSection
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.data.DataRepository
 import com.jetpack.compose.data.HeaderData
 
@@ -34,7 +34,7 @@ class VerticalGridActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "纵向Grid") {
+            AppPage(title = "纵向Grid") {
                 BuildPictureVerticalGrid()
             }
         }

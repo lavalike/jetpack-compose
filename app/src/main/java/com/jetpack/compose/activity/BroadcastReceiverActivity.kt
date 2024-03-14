@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jetpack.compose.base.BuildSection
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -46,7 +46,7 @@ class BroadcastReceiverActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "实时获取电池信息") {
+            AppPage(title = "实时获取电池信息") {
                 BuildContent()
             }
         }

@@ -42,7 +42,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.data.DataRepository
 import com.jetpack.compose.data.MediaEntity
 
@@ -56,7 +56,7 @@ class RecyclerEmbedActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "Recycler嵌入") {
+            AppPage(title = "Recycler嵌入") {
                 BuildRecycler()
             }
         }

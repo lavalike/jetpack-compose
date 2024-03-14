@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jetpack.compose.R
 import com.jetpack.compose.base.BuildSection
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -32,7 +32,7 @@ class NetworkImageActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "网络图片") {
+            AppPage(title = "网络图片") {
                 NetworkImageComposable()
             }
         }

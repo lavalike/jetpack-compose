@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -35,9 +34,8 @@ import com.jetpack.compose.ui.theme.JetpackComposeTheme
  * @date : 2023/9/22/022
  */
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BuildPage(title: String, content: @Composable () -> Unit) {
+fun AppPage(title: String, content: @Composable () -> Unit) {
     JetpackComposeTheme {
         Scaffold(
             topBar = {
@@ -55,21 +53,15 @@ fun BuildPage(title: String, content: @Composable () -> Unit) {
 fun AppBar(title: String) {
     val context = LocalContext.current
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(55.dp)
+        modifier = Modifier.fillMaxWidth().height(55.dp)
             .background(color = MaterialTheme.colorScheme.primary),
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxHeight()
-                .aspectRatio(1f)
-                .clickable {
-                    if (context is Activity) {
-                        context.finish()
-                    }
-                },
-            contentAlignment = Alignment.Center
+            modifier = Modifier.fillMaxHeight().aspectRatio(1f).clickable {
+                if (context is Activity) {
+                    context.finish()
+                }
+            }, contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,

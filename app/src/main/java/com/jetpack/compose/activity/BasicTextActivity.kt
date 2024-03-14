@@ -25,7 +25,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jetpack.compose.base.BuildSection
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -38,7 +38,7 @@ class BasicTextActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "基本文本") {
+            AppPage(title = "基本文本") {
                 BasicTextComposable()
             }
         }

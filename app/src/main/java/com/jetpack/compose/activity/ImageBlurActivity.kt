@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jetpack.compose.R
 import com.jetpack.compose.base.BuildSection
-import com.jetpack.compose.base.BuildPage
+import com.jetpack.compose.base.AppPage
 import com.jetpack.compose.data.HeaderData
 
 /**
@@ -32,7 +32,7 @@ class ImageBlurActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BuildPage(title = "图片模糊") {
+            AppPage(title = "图片模糊") {
                 ImageBlurComposable()
             }
         }
