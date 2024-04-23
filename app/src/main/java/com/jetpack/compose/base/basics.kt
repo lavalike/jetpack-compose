@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -53,18 +53,23 @@ fun AppPage(title: String, content: @Composable () -> Unit) {
 fun AppBar(title: String) {
     val context = LocalContext.current
     Box(
-        modifier = Modifier.fillMaxWidth().height(55.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(55.dp)
             .background(color = MaterialTheme.colorScheme.primary),
     ) {
         Box(
-            modifier = Modifier.fillMaxHeight().aspectRatio(1f).clickable {
-                if (context is Activity) {
-                    context.finish()
-                }
-            }, contentAlignment = Alignment.Center
+            modifier = Modifier
+                .fillMaxHeight()
+                .aspectRatio(1f)
+                .clickable {
+                    if (context is Activity) {
+                        context.finish()
+                    }
+                }, contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = Icons.Filled.ArrowBack,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = null,
                 tint = Color.White,
             )
