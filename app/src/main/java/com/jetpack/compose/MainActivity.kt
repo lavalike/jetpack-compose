@@ -16,14 +16,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.rounded.Favorite
-import androidx.compose.material.icons.rounded.Phone
-import androidx.compose.material.icons.rounded.Send
-import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -60,15 +54,9 @@ class MainActivity : ComponentActivity() {
                     topBar = {
                         TopAppBar(
                             title = { Text(text = "Jetpack Compose", color = Color.White) },
-                            colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
+                            colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary)
                         )
                     },
-                    floatingActionButton = {
-                        FloatingActionButton(onClick = { /*TODO*/ }) {
-                            Icon(Icons.Default.Send, contentDescription = "Send")
-                        }
-                    },
-                    floatingActionButtonPosition = FabPosition.End,
                 ) { contentPadding ->
                     Box(modifier = Modifier.padding(contentPadding)) {
                         LazyVerticalGrid(columns = GridCells.Fixed(2)) {
@@ -91,30 +79,26 @@ fun BuildItem(data: IndexEntity) {
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(2f)
+            .aspectRatio(1.25f)
             .clip(RoundedCornerShape(5.dp))
             .padding(10.dp),
         shadowElevation = 2.dp,
         tonalElevation = 2.dp,
     ) {
-        Box(
+        Column(
             modifier = Modifier.clickable {
                 context.startActivity(Intent(context, data.clazz))
             },
-            contentAlignment = Alignment.Center
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Icon(Icons.Rounded.Send, contentDescription = null)
-                Text(
-                    text = data.title,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 6.dp),
-                )
-            }
+            Icon(Icons.AutoMirrored.Rounded.Send, contentDescription = null)
+            Text(
+                text = data.title,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 6.dp),
+            )
         }
     }
 }
