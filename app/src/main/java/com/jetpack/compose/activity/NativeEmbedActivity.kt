@@ -2,6 +2,8 @@ package com.jetpack.compose.activity
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
@@ -13,12 +15,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.res.ResourcesCompat
+import com.jetpack.compose.R
 import com.jetpack.compose.databinding.ActivitySecondBinding
 import com.jetpack.compose.ui.theme.JetpackComposeTheme
 
@@ -40,18 +45,34 @@ class NativeEmbedActivity : AppCompatActivity() {
 
     private fun initViews() {
         with(binding) {
-            btnNative1.setOnClickListener { }
-            btnNative2.setOnClickListener { }
-            root.addView(ComposeView(root.context).apply {
-                setContent {
-                    JetpackComposeTheme {
-                        Column {
-                            NativeComposable()
-                        }
+            container.removeAllViews()
+            repeat(10) {
+                container.apply {
+                    if (it == 0) {
+                        addView(createButton())
                     }
+                    addView(createComposeView())
+                    addView(createButton())
                 }
-            }, 1)
+            }
         }
+    }
+
+    private fun createComposeView() = ComposeView(this).apply {
+        setContent {
+            JetpackComposeTheme {
+                Column {
+                    NativeComposable()
+                }
+            }
+        }
+    }
+
+    private fun createButton() = Button(this).apply {
+        isAllCaps = false
+        text = "Native UI"
+        setTextColor(android.graphics.Color.WHITE)
+        background = ResourcesCompat.getDrawable(resources, R.drawable.btn_themed_background, theme)
     }
 }
 
@@ -83,8 +104,7 @@ fun NativeComposable() {
                 onClick = {
                     Toast.makeText(context, "返回上一页", Toast.LENGTH_SHORT).show()
                     (context as? Activity)?.finish()
-                },
-                modifier = Modifier.padding(10.dp)
+                }, modifier = Modifier.padding(10.dp)
             ) {
                 Text("返回上一页")
             }
