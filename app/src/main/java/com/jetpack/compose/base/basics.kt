@@ -10,15 +10,18 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,13 +63,19 @@ fun AppBar(title: String) {
     ) {
         Box(
             modifier = Modifier
+                .padding(start = 10.dp, top = 5.dp, end = 5.dp, bottom = 5.dp)
+                .clip(CircleShape)
                 .fillMaxHeight()
                 .aspectRatio(1f)
-                .clickable {
+                .clickable(
+                    interactionSource = null,
+                    indication = ripple(bounded = false)
+                ) {
                     if (context is Activity) {
                         context.finish()
                     }
-                }, contentAlignment = Alignment.Center
+                },
+            contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,

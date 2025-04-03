@@ -79,7 +79,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
     // general compose configs
-    val composeBom = "androidx.compose:compose-bom:2024.01.00"
+    val composeBom = "androidx.compose:compose-bom:2024.11.00"
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation(platform(composeBom))
