@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.jetpack.compose"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.jetpack.compose"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -80,7 +80,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
     // general compose configs
-    val composeBom = "androidx.compose:compose-bom:2024.11.00"
+    val composeBom = "androidx.compose:compose-bom:2025.05.00"
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation(platform(composeBom))
